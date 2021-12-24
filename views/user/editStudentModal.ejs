@@ -1,0 +1,121 @@
+<a href="" data-bs-toggle="modal" data-bs-target="#editStudentModal<%=student._id%>">Edit</a>
+<div class="modal fade" id="editStudentModal<%=student._id%>" tabindex="-1"
+    aria-labelledby="editStudentModal<%=student._id%>Label" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="/user/editStudent" method="post">
+
+            <div class="modal-header">
+                <h5 class="modal-title" id="editStudentModal<%=student._id%>Label">Edit Student</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <input type="text" name="id" value="<%=student._id%>" style="display:none; visibility: hidden;">
+                    <label for="name">Full Name</label>
+                    <input type="text" value="<%=student.name%>" name="name" class="form-control" id="name"
+                        placeholder=" " aria-describedby="name" required>
+                    <label for="dob">Date of birth</label>
+                    <% let date=new Date(student.dob) %>
+                        <input type="date" name="dob" value="<%=date.toISOString().split('T')[0]%>" class="form-control"
+                            id="dob" placeholder=" " aria-describedby="dob" required>
+                        <label for="school">School</label>
+                        <select class="form-select" name="school" value="<%=student.school%>" required>
+                            <option value=" cse" <% if (student.school=='cse' ) { %>
+                                selected>
+                                <% } else { %>
+                                    >
+                                    <%}%>
+                                        CSE
+                            </option>
+                            <option value="ece" <% if (student.school=='ece' ) { %>
+                                selected>
+                                <% } else { %>
+                                    >
+                                    <%}%>
+                                        ECE
+                            </option>
+                            <option value="it" <% if (student.school=='it' ) { %>
+                                selected>
+                                <% } else { %>
+                                    >
+                                    <%}%>
+
+                                        IT
+                            </option>
+                        </select>
+                        <label for="class">Class</label>
+                        <select class="form-select" name="class" required>
+                            <option value="1" <% if (student.class=='1' ) { %>
+                                selected>
+                                <% } else { %>
+                                    >
+                                    <%}%>
+                                        1
+                            </option>
+                            <option value="2" <% if (student.class=='2' ) { %>
+                                selected>
+                                <% } else { %>
+                                    >
+                                    <%}%>
+                                        2
+                            </option>
+                            <option value="3" <% if (student.class=='3' ) { %>
+                                selected>
+                                <% } else { %>
+                                    >
+                                    <%}%>
+                                        3
+                            </option>
+                        </select>
+                        <label for="division">division</label>
+                        <select class="form-select" name="division" value="<%=student.division%>" required>
+                            <option value="a" <% if (student.division=='a' ) { %>
+                                selected>
+                                <% } else { %>
+                                    >
+                                    <%}%>
+                                        A
+                            </option>
+                            <option value="b" <% if (student.division=='b' ) { %>
+                                selected>
+                                <% } else { %>
+                                    >
+                                    <%}%>B
+                            </option>
+                        </select>
+                        <label for="status">status</label>
+                        <% if (student.status=='Active' ) { %>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="status" id="active"
+                                    value="Active" required checked>
+
+                                <label class="form-check-label" for="active">Active</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="status" id="inactive"
+                                    value="Inactive">
+                                <label class="form-check-label" for="inactive">Inactive</label>
+                            </div>
+                            <% } else { %>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="status" id="active"
+                                        value="Active" required >
+    
+                                    <label class="form-check-label" for="active">Active</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="status" id="inactive"
+                                        value="Inactive" checked>
+                                    <label class="form-check-label" for="inactive">Inactive</label>
+                                </div>
+                                <%}%>
+                                    
+                
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-secondary">Save Changes</button>
+            </div>
+        </form>
+        </div>
+    </div>
+</div>

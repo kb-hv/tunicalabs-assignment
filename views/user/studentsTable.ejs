@@ -1,0 +1,82 @@
+<script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
+
+<div class="container  flex-column flex-sm-row  m-auto my-3 mt-5 p-4"
+    style=" background-color: white; border: 1px solid black ;">
+    <div class="table-responsive-xxl ">
+        <table class=" caption-top table-responsive-xxl table table-hover table-bordered" id="table">
+            <caption>
+                <button class="btn btn-secondary" onclick="ExportToExcel('xlsx')">Export table to excel</button>
+            </caption>
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Student Name</th>
+                    <th scope="col">Age</th>
+                    <th scope="col">School</th>
+                    <th scope="col">Class</th>
+                    <th scope="col">Division</th>
+                    <th scope="col">Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% let i=1; %>
+                    <% students.forEach(student=> { %>
+                        <tr>
+                            <td>
+                                <%= i++ %>
+                            </td>
+                            <td>
+                                <%= student.name %>
+                            </td>
+                            <% let age=new Date().getFullYear() - new Date(student.dob).getFullYear() %>
+                                <td>
+                                    <%= age %>
+                                </td>
+                                <td>
+                                    <%= student.school.toUpperCase() %>
+                                </td>
+                                <td>
+                                    <%= student.class %>
+                                </td>
+                                <td>
+                                    <%= student.division.toUpperCase() %>
+                                </td>
+                                <td>
+                                    <%= student.status %>
+                                </td>
+                                <td id="">
+                                    <%- include('./editStudentModal', {student}) %>
+                                        <a href="/user/deleteStudent/<%=student._id%>">Delete</a>
+                                </td>
+                        </tr>
+                        <% }) %>
+            </tbody>
+        </table>
+
+    </div>
+
+</div>
+
+<script>
+    function ExportToExcel(type, fn, dl) {
+        let elt = document.getElementById("table");
+        const wb = XLSX.utils.book_new();
+        let ws = XLSX.utils.table_to_sheet(elt);
+        let wscols = [
+            { wch: 15 },
+            { wch: 20 },
+            { wch: 20 },
+            { wch: 15 },
+            { wch: 20 },
+            { wch: 10 },
+            { wch: 10 },
+            { wch: 10 },
+            { wch: 10 },
+            { wch: 10 }];
+        ws["!cols"] = wscols;
+        ws['!ref'] = ws['!ref'].replace('H', 'G');
+        let ws_name = 'Student Details'
+        XLSX.utils.book_append_sheet(wb, ws, ws_name);
+        XLSX.writeFile(wb, fn || ('Student Details.' + (type || 'xlsx')))
+    }
+</script>
